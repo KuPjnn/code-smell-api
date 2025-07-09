@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM quay.io/quarkus/quarkus-micro-image:2.0
 WORKDIR /app
 COPY target/*-runner /app/application
 EXPOSE 8002
