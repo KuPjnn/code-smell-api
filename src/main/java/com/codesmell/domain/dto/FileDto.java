@@ -1,5 +1,6 @@
 package com.codesmell.domain.dto;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import java.time.ZonedDateTime;
 @Setter
 @SuperBuilder
 @NoArgsConstructor
+@RegisterForReflection
 public class FileDto {
 
     private String fileName;

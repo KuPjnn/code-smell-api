@@ -1,6 +1,7 @@
 package com.codesmell.domain.dto;
 
 import com.codesmell.domain.eum.Status;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import java.util.Collection;
 @Setter
 @SuperBuilder
 @NoArgsConstructor
+@RegisterForReflection
 public class PostDto extends BaseDto<Long> {
 
     private Status status;

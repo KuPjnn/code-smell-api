@@ -1,13 +1,17 @@
 package com.codesmell.domain.api;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.ws.rs.core.Response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
+@RegisterForReflection
 public class ApiResult<T> {
 
     private int code;

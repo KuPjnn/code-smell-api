@@ -1,12 +1,22 @@
 package com.codesmell.config;
 
 import io.minio.MinioClient;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.Produces;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
+@RegisterForReflection(targets = {
+        io.minio.GetObjectArgs.class,
+        io.minio.PutObjectArgs.class,
+        io.minio.SetBucketPolicyArgs.class,
+        io.minio.MakeBucketArgs.class,
+        io.minio.BucketExistsArgs.class,
+        io.minio.StatObjectArgs.class,
+        io.minio.RemoveObjectArgs.class,
+})
 @Slf4j
 @ApplicationScoped
 public class MinioConfig {
