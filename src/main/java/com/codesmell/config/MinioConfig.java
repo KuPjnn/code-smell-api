@@ -17,6 +17,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
         io.minio.StatObjectArgs.class,
         io.minio.RemoveObjectArgs.class,
         io.minio.ListObjectsArgs.class,
+        io.minio.messages.LocationConstraint.class,
 })
 @Slf4j
 @ApplicationScoped
