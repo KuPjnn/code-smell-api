@@ -16,6 +16,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
         io.minio.BucketExistsArgs.class,
         io.minio.StatObjectArgs.class,
         io.minio.RemoveObjectArgs.class,
+        io.minio.ListObjectsArgs.class,
 })
 @Slf4j
 @ApplicationScoped
