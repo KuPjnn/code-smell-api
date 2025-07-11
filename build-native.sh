@@ -10,7 +10,8 @@ docker run --rm -it \
   -w /workspace \
   vegardit/graalvm-maven:latest-java21 \
   mvn clean install -Pnative \
-  -Dquarkus.profile=native
+  -Dquarkus.native.native-image-xmx=4g \
+  -Dquarkus.native.additional-build-args=--parallelism=4
 
 echo "✅ Native binary build completed."
 
