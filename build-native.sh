@@ -4,7 +4,7 @@ set -e
 
 echo "🚀 Building Quarkus Native binary inside Docker (cache .m2)..."
 
-docker run --rm -it \
+docker run --rm -it --memory=4g --cpus=4 \
   -v ~/.m2/repository:/root/.m2/repository:rw \
   -v $PWD:/workspace:rw \
   -w /workspace \
