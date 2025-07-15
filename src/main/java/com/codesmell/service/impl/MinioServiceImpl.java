@@ -21,7 +21,6 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.resteasy.reactive.multipart.FileUpload;
@@ -124,7 +123,6 @@ public class MinioServiceImpl implements IMinioService {
                 minioClient.setBucketPolicy(setBucketPolicyArgs);
             }
 
-            Thumbnails.of(file.uploadedFile().toFile()).size(1280, 720).toOutputStream(bao);
             var bis = new ByteArrayInputStream(bao.toByteArray());
 
             String fileName = file.fileName();
