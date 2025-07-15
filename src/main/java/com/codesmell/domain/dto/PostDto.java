@@ -18,6 +18,8 @@ public class PostDto extends BaseDto<Long> {
 
     private Status status;
 
+    private String thumbnail;
+
     private String title;
 
     private String slug;

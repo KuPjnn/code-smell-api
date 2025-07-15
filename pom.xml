@@ -60,6 +60,10 @@
             <artifactId>quarkus-jdbc-mysql</artifactId>
         </dependency>
         <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-flyway</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>

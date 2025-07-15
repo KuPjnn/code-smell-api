@@ -27,6 +27,8 @@ import org.jboss.resteasy.reactive.multipart.FileUpload;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -94,7 +96,7 @@ public class MinioServiceImpl implements IMinioService {
     @SneakyThrows
     @Override
     public FileDto uploadObject(FileUpload file, String path) {
-        String contentType = file.contentType();
+        var contentType = file.contentType();
 
         if (Objects.isNull(contentType) || !ALLOWED_CONTENT_TYPES.contains(contentType)) {
             Asserts.unsupportedMediaType("Unsupported file type. Allowed types are JPEG, PNG, and GIF.");
@@ -109,27 +111,26 @@ public class MinioServiceImpl implements IMinioService {
             path = sdf.format(new Date());
         }
 
-        try (var bao = new ByteArrayOutputStream()) {
-            boolean isExist = minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
+        var fileUpload = file.uploadedFile().toFile();
+        try (var is = new FileInputStream(fileUpload)) {
+            var isExist = minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
             if (isExist) {
                 log.info("The bucket {} already exists!", bucketName);
             } else {
                 minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
-                BucketPolicyConfigDto bucketPolicyConfigDto = createBucketPolicyConfigDto(bucketName);
-                SetBucketPolicyArgs setBucketPolicyArgs = SetBucketPolicyArgs.builder()
+                var bucketPolicyConfigDto = createBucketPolicyConfigDto(bucketName);
+                var setBucketPolicyArgs = SetBucketPolicyArgs.builder()
                         .bucket(bucketName)
                         .config(objectMapper.writeValueAsString(bucketPolicyConfigDto))
                         .build();
                 minioClient.setBucketPolicy(setBucketPolicyArgs);
             }
 
-            var bis = new ByteArrayInputStream(bao.toByteArray());
-
-            String fileName = file.fileName();
+            var fileName = file.fileName();
             var response = minioClient.putObject(PutObjectArgs.builder()
                     .bucket(bucketName)
                     .object(path + "/" + fileName)
-                    .stream(bis, bis.available(), -1)
+                    .stream(is, is.available(), -1)
                     .contentType(contentType)
                     .build());
 

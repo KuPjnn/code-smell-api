@@ -35,6 +35,10 @@ public class Post extends BaseEntity<Long> {
     private Status status;
 
     @NotNull
+    @Column(name = "thumbnail")
+    private String thumbnail;
+
+    @NotNull
     @Column(name = "title")
     private String title;
 
