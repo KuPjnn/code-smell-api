@@ -1,6 +1,6 @@
 package com.codesmell.config;
 
-import com.codesmell.domain.api.ApiResult;
+import com.codesmell.domain.api.R;
 import com.codesmell.domain.exception.ApiException;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
@@ -18,7 +18,7 @@ class GlobalExceptionHandle implements ExceptionMapper<Exception> {
         log.error(e.getMessage(), e);
         return Response
                 .status(Response.Status.INTERNAL_SERVER_ERROR)
-                .entity(ApiResult.failed())
+                .entity(R.failed())
                 .build();
     }
 }
@@ -31,7 +31,7 @@ class ApiExceptionHandle implements ExceptionMapper<ApiException> {
         log.error(e.getMessage(), e);
         int statusCode = e.getStatus().getStatusCode();
         String message = e.getStatus().getReasonPhrase();
-        ApiResult<?> result = new ApiResult<>(statusCode, message, null);
+        R<?> result = new R<>(statusCode, message, null);
         return Response
                 .status(e.getStatus())
                 .entity(result)

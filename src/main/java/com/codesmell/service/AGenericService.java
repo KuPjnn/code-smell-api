@@ -4,7 +4,7 @@ import com.codesmell.domain.dto.BaseDto;
 import com.codesmell.domain.entity.BaseEntity;
 import com.codesmell.mapper.IGenericMapper;
 import com.codesmell.domain.api.PageRequest;
-import com.codesmell.domain.api.PageResponse;
+import com.codesmell.domain.api.RPage;
 import com.codesmell.domain.api.SortDirection;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
@@ -45,7 +45,7 @@ public abstract class AGenericService<
     }
 
     @Override
-    public PageResponse<D> list(PageRequest pageRequest) {
+    public RPage<D> list(PageRequest pageRequest) {
         Sort.Direction direction = Sort.Direction.Descending;
         if (SortDirection.ASC.equals(pageRequest.getSort())) {
             direction = Sort.Direction.Ascending;
@@ -54,6 +54,6 @@ public abstract class AGenericService<
         PanacheQuery<E> page = repository.findAll(sort).page(pageRequest.getPageNum() - 1, pageRequest.getPageSize());
         List<D> content = page.list().stream().map(e -> mapper.toDto(e)).toList();
         long totalElements = page.count();
-        return new PageResponse<>(content, pageRequest.getPageNum(), pageRequest.getPageSize(), totalElements);
+        return new RPage<>(content, pageRequest.getPageNum(), pageRequest.getPageSize(), totalElements);
     }
 }

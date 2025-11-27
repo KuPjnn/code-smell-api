@@ -1,7 +1,7 @@
 package com.codesmell.controller;
 
 import com.codesmell.service.IMinioService;
-import com.codesmell.domain.api.ApiResult;
+import com.codesmell.domain.api.R;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -27,27 +27,27 @@ public class MinioController {
     @GET
     @Path("/files")
     @Produces(MediaType.APPLICATION_JSON)
-    public ApiResult<?> files(@QueryParam("path") String path) {
+    public R<?> files(@QueryParam("path") String path) {
         var result = minioService.listObjects(path);
-        return ApiResult.success(result);
+        return R.ok(result);
     }
 
     @GET
     @Path("/file")
     @Produces(MediaType.APPLICATION_JSON)
-    public ApiResult<?> file(@QueryParam("path") String path) {
+    public R<?> file(@QueryParam("path") String path) {
         var result = minioService.fileDetails(path);
-        return ApiResult.success(result);
+        return R.ok(result);
     }
 
     @POST
     @Path("/upload")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public ApiResult<?> upload(@RestForm("file") FileUpload file,
-                               @QueryParam("path") String path) {
+    public R<?> upload(@RestForm("file") FileUpload file,
+                       @QueryParam("path") String path) {
         var result = minioService.uploadObject(file, path);
-        return ApiResult.success(result);
+        return R.ok(result);
     }
 
     @GET
@@ -65,9 +65,9 @@ public class MinioController {
     @Path("/delete")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public ApiResult<?> delete(@QueryParam("objectName") String objectName) {
+    public R<?> delete(@QueryParam("objectName") String objectName) {
         minioService.deleteObject(objectName);
-        return ApiResult.success(null);
+        return R.ok(null);
     }
 
 }

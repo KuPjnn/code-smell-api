@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @RegisterForReflection
-public class PageResponse<D> {
+public class RPage<D> {
     private List<D> content;
     private int pageNumber;
     private int pageSize;
@@ -21,7 +21,7 @@ public class PageResponse<D> {
     private int totalPages;
     private boolean last;
 
-    public PageResponse(List<D> content, int pageNumber, int pageSize, long totalElements) {
+    public RPage(List<D> content, int pageNumber, int pageSize, long totalElements) {
         this.content = content;
         this.pageNumber = pageNumber;
         this.pageSize = pageSize;

@@ -3,9 +3,9 @@ package com.codesmell.controller;
 import com.codesmell.domain.dto.BaseDto;
 import com.codesmell.domain.entity.BaseEntity;
 import com.codesmell.service.IGenericService;
-import com.codesmell.domain.api.ApiResult;
+import com.codesmell.domain.api.R;
 import com.codesmell.domain.api.PageRequest;
-import com.codesmell.domain.api.PageResponse;
+import com.codesmell.domain.api.RPage;
 import jakarta.ws.rs.BeanParam;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -35,30 +35,30 @@ public abstract class AGenericController<
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public ApiResult<?> get(@PathParam("id") ID id) {
+    public R<?> get(@PathParam("id") ID id) {
         Optional<D> dtoOptional = genericService.get(id);
-        return ApiResult.success(dtoOptional);
+        return R.ok(dtoOptional);
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public ApiResult<?> list(@BeanParam PageRequest pageParam) {
-        PageResponse<D> page = genericService.list(pageParam);
-        return ApiResult.success(page);
+    public R<?> list(@BeanParam PageRequest pageParam) {
+        RPage<D> page = genericService.list(pageParam);
+        return R.ok(page);
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public ApiResult<?> create(D dto) {
-        return ApiResult.success(genericService.save(dto));
+    public R<?> create(D dto) {
+        return R.ok(genericService.save(dto));
     }
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public ApiResult<?> update(D dto) {
-        return ApiResult.success(genericService.save(dto));
+    public R<?> update(D dto) {
+        return R.ok(genericService.save(dto));
     }
 
 }
