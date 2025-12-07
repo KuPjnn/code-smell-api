@@ -18,6 +18,10 @@ public class R<T> {
     private String message;
     private T data;
 
+    public static <T> R<T> ok() {
+        return ok(null);
+    }
+
     public static <T> R<T> ok(T data) {
         return new R<>(Response.Status.OK.getStatusCode(), Response.Status.OK.getReasonPhrase(), data);
     }

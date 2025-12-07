@@ -1,6 +1,6 @@
-create table cms_category
+create table if not exists cms_category
 (
-    id           bigint       not null auto_increment,
+    id           serial       not null,
     name         varchar(50)  not null,
     created_date timestamp    not null,
     created_by   varchar(255) not null,
@@ -9,13 +9,14 @@ create table cms_category
     primary key (id)
 );
 
-create table cms_post
+create table if not exists cms_post
 (
-    id           bigint       not null auto_increment,
+    id           serial       not null,
     category_id  bigint       not null,
     status       varchar(10)  not null,
     title        varchar(500) not null,
     slug         varchar(255) not null,
+    thumbnail    varchar(255),
     content      text         not null,
     created_date timestamp    not null,
     created_by   varchar(255) not null,
@@ -25,9 +26,9 @@ create table cms_post
     foreign key (category_id) references cms_category (id)
 );
 
-create table cms_comment
+create table if not exists cms_comment
 (
-    id           bigint       not null auto_increment,
+    id           serial       not null,
     post_id      bigint       not null,
     content      varchar(500) not null,
     created_date timestamp    not null,
@@ -38,9 +39,9 @@ create table cms_comment
     foreign key (post_id) references cms_post (id)
 );
 
-create table cms_file
+create table if not exists cms_file
 (
-    id           bigint       not null auto_increment,
+    id           serial       not null,
     post_id      bigint       not null,
     file_name    varchar(500) not null,
     file_path    varchar(500) not null,
@@ -53,9 +54,9 @@ create table cms_file
     foreign key (post_id) references cms_post (id)
 );
 
-create table cms_tag
+create table if not exists cms_tag
 (
-    id           bigint       not null auto_increment,
+    id           serial       not null,
     name         varchar(50)  not null,
     created_date timestamp    not null,
     created_by   varchar(255) not null,
@@ -64,9 +65,9 @@ create table cms_tag
     primary key (id)
 );
 
-create table cms_post_tag
+create table if not exists cms_post_tag
 (
-    id      bigint not null auto_increment,
+    id      serial not null,
     post_id bigint not null,
     tag_id  bigint not null,
     primary key (id),

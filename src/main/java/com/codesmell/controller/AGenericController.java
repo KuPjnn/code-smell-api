@@ -1,11 +1,11 @@
 package com.codesmell.controller;
 
+import com.codesmell.domain.api.PageRequest;
+import com.codesmell.domain.api.R;
+import com.codesmell.domain.api.RPage;
 import com.codesmell.domain.dto.BaseDto;
 import com.codesmell.domain.entity.BaseEntity;
 import com.codesmell.service.IGenericService;
-import com.codesmell.domain.api.R;
-import com.codesmell.domain.api.PageRequest;
-import com.codesmell.domain.api.RPage;
 import jakarta.ws.rs.BeanParam;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;

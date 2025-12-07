@@ -14,7 +14,9 @@ import org.hibernate.event.spi.PreUpdateEventListener;
 import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.persister.entity.EntityPersister;
 
+import java.security.Principal;
 import java.time.Instant;
+import java.util.Optional;
 
 @ApplicationScoped
 public class AuditListener implements PreInsertEventListener, PreUpdateEventListener {
@@ -37,17 +39,18 @@ public class AuditListener implements PreInsertEventListener, PreUpdateEventList
     public boolean onPreInsert(PreInsertEvent event) {
         if (event.getEntity() instanceof Auditable auditable) {
             Instant now = Instant.now();
-            String user = identity.getPrincipal().getName();
+            Optional<Principal> user = Optional.of(identity.getPrincipal());
+            String userName = user.map(Principal::getName).orElse("Anonymous");
             auditable.setCreatedDate(now);
-            auditable.setCreatedBy(user);
+            auditable.setCreatedBy(userName);
             auditable.setUpdatedDate(now);
-            auditable.setUpdatedBy(user);
+            auditable.setUpdatedBy(userName);
 
             // Update state
             setValue(event.getPersister(), event.getState(), "createdDate", now);
-            setValue(event.getPersister(), event.getState(), "createdBy", user);
+            setValue(event.getPersister(), event.getState(), "createdBy", userName);
             setValue(event.getPersister(), event.getState(), "updatedDate", now);
-            setValue(event.getPersister(), event.getState(), "updatedBy", user);
+            setValue(event.getPersister(), event.getState(), "updatedBy", userName);
         }
         return false;
     }
@@ -56,13 +59,14 @@ public class AuditListener implements PreInsertEventListener, PreUpdateEventList
     public boolean onPreUpdate(PreUpdateEvent event) {
         if (event.getEntity() instanceof Auditable auditable) {
             Instant now = Instant.now();
-            String user = identity.getPrincipal().getName();
+            Optional<Principal> user = Optional.of(identity.getPrincipal());
+            String userName = user.map(Principal::getName).orElse("Anonymous");
             auditable.setUpdatedDate(now);
-            auditable.setUpdatedBy(user);
+            auditable.setUpdatedBy(userName);
 
             // Update state
             setValue(event.getPersister(), event.getState(), "updatedDate", now);
-            setValue(event.getPersister(), event.getState(), "updatedBy", user);
+            setValue(event.getPersister(), event.getState(), "updatedBy", userName);
         }
         return false;
     }

@@ -1,6 +1,7 @@
 package com.codesmell.domain.dto;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import java.time.Instant;
 @Setter
 @SuperBuilder
 @NoArgsConstructor
+@AllArgsConstructor
 @RegisterForReflection
 public abstract class BaseDto<ID> implements Serializable {
 
