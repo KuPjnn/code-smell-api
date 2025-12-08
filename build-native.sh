@@ -18,6 +18,6 @@ echo "✅ Native binary build completed."
 
 echo "🚀 Building Docker Image..."
 
-docker build -t codesmell-api:latest .
+docker build -t registry.codesmell.io.vn/codesmell-api:latest .
 
 echo "✅ Docker image build completed."
