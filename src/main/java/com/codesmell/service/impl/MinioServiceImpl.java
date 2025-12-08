@@ -5,6 +5,7 @@ import com.codesmell.domain.dto.FileDto;
 import com.codesmell.domain.exception.ApiException;
 import com.codesmell.domain.exception.Asserts;
 import com.codesmell.service.IMinioService;
+import com.codesmell.util.IdGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.minio.BucketExistsArgs;
 import io.minio.GetObjectArgs;
@@ -58,6 +59,9 @@ public class MinioServiceImpl implements IMinioService {
 
     @Inject
     ObjectMapper objectMapper;
+
+    @Inject
+    IdGenerator idGenerator;
 
     @Override
     public Collection<FileDto> listObjects(String path) {
@@ -126,7 +130,7 @@ public class MinioServiceImpl implements IMinioService {
                 minioClient.setBucketPolicy(setBucketPolicyArgs);
             }
 
-            var fileName = file.fileName();
+            var fileName = this.generateFilename(file.fileName());
             var response = minioClient.putObject(PutObjectArgs.builder()
                     .bucket(bucketName)
                     .object(path + "/" + fileName)
@@ -201,5 +205,16 @@ public class MinioServiceImpl implements IMinioService {
                 .Version("2012-10-17")
                 .Statement(Collections.singletonList(statement))
                 .build();
+    }
+
+    public String generateFilename(String originalFilename) {
+        String ext = "";
+
+        int dot = originalFilename.lastIndexOf(".");
+        if (dot != -1) {
+            ext = originalFilename.substring(dot);
+        }
+
+        return idGenerator.nextId() + ext;
     }
 }
