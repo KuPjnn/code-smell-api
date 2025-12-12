@@ -1,7 +1,11 @@
 package com.codesmell.domain.entity;
 
+import com.codesmell.domain.eum.RelationType;
+import com.codesmell.domain.eum.TransportationType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -30,6 +34,14 @@ public class WeddingInvite extends BaseEntity<Long> {
 
     @Column(name = "attendees_no")
     private Integer attendeesNo;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "transportation")
+    private TransportationType transportation;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "relation")
+    private RelationType relation;
 
     @Column(name = "wish")
     private String wish;

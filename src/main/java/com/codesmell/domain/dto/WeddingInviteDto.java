@@ -1,5 +1,7 @@
 package com.codesmell.domain.dto;
 
+import com.codesmell.domain.eum.RelationType;
+import com.codesmell.domain.eum.TransportationType;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +22,10 @@ public class WeddingInviteDto extends BaseDto<Long> {
     private String phone;
 
     private Integer attendeesNo;
+
+    private TransportationType transportation;
+
+    private RelationType relation;
 
     private String wish;
 
