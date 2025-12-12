@@ -29,4 +29,19 @@ public class WeddingInviteDto extends BaseDto<Long> {
 
     private String wish;
 
+    public String toNtfyMessage() {
+        if (isInvite) {
+            return "Có một khách mời sẽ tham dự cưới." + "\n" +
+                    "Họ và tên: " + fullName + "\n" +
+                    "Số điện thoại: " + phone + "\n" +
+                    "Số người tham dự: " + attendeesNo + "\n" +
+                    "Phương tiện: " + transportation.getValue() + "\n" +
+                    "Quan hệ: " + relation.getValue() + "\n" +
+                    "Lời chúc: " + wish;
+        } else {
+            return "Có một khách mời không tham dự cưới." + "\n" +
+                    "Họ và tên: " + fullName + "\n" +
+                    "Lời chúc: " + wish;
+        }
+    }
 }

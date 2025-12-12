@@ -2,13 +2,15 @@ package com.codesmell.config;
 
 import io.smallrye.config.ConfigMapping;
 
+import java.util.Optional;
+
 @ConfigMapping(prefix = "ntfy")
 public interface NtfyProperties {
     String server();
 
     String topic();
 
-    String username();
+    Optional<String> username();
 
-    String password();
+    Optional<String> password();
 }

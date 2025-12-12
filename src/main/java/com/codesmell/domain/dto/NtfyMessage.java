@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Builder
@@ -14,6 +16,6 @@ import lombok.Setter;
 public class NtfyMessage {
     private String title;
     private String message;
-    private String priority;
-    private String tags;
+    private Integer priority;
+    private List<String> tags;
 }

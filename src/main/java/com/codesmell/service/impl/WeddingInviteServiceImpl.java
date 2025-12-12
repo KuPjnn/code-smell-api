@@ -10,7 +10,11 @@ import com.codesmell.service.INtfyService;
 import com.codesmell.service.IWeddingInviteService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @ApplicationScoped
@@ -32,17 +36,24 @@ public class WeddingInviteServiceImpl extends AGenericService<WeddingInvite, Wed
     WeddingInviteRepository weddingInviteRepository;
 
     @Override
+    @Transactional
     public WeddingInviteDto submit(WeddingInviteDto dto) {
         WeddingInvite invite = weddingInviteMapper.toEntity(dto);
         invite = weddingInviteRepository.getEntityManager().merge(invite);
 
-        String msg = "Thông báo mới: " + invite.getFullName() + " đã đăng ký tham gia tiệc cưới";
-        ntfyService.sendNotificationAsync(new NtfyMessage(
-                "Thông báo xác nhận tham dự cưới",
-                msg,
-                "high",
-                "wedding"
-        ));
+        // send notification
+        String title = "Thông báo xác nhận tham dự cưới";
+        String msg = dto.toNtfyMessage();
+        List<String> tags = new ArrayList<>();
+        tags.add("wedding");
+        if (dto.getIsInvite()) {
+            tags.add("white_check_mark");
+        } else {
+            tags.add("no_entry");
+        }
+        NtfyMessage ntfyMsg = new NtfyMessage(title, msg, 3, tags);
+        ntfyService.sendNotificationAsync(ntfyMsg);
+
         return mapper.toDto(invite);
     }
 }
